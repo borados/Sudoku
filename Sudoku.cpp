@@ -36,7 +36,7 @@ void vprint_Sudoku(std::vector<std::vector<int> > v) {
 	}
 
 }
-
+// pretvori liniju teksta u vektor
 void linija_u_polje(std::string linija, std::vector<int> &v) {
 	for (int k = 0; linija[k] != '\0'; k++) {
 		//std::cout << sLine[k];
@@ -46,6 +46,7 @@ void linija_u_polje(std::string linija, std::vector<int> &v) {
 	}
 }
 
+//pretvori vektor u matricu 9*9
 void polje_u_sudoku(std::vector<int> field, std::vector<std::vector<int> > &v) {
 	int k = 0;
 	for(int i = 0; i < 9; i++ )
@@ -64,7 +65,7 @@ int in_line(std::vector<std::vector<int> >& v, int n, int i,int  j) {
 	}
 	return 1; 
 }
-
+// moze li n na to polje po stupcu
 int in_column(std::vector<std::vector<int> >& v, int n, int i, int  j) {
 	if (v[i][j] != 0)
 		return 0;
@@ -75,7 +76,7 @@ int in_column(std::vector<std::vector<int> >& v, int n, int i, int  j) {
 	return 1;
 }
 
-
+// moze li n na to polje u kutiji
 int check_box(std::vector<std::vector<int> >& v, int n, int i, int  j) {
 	int x, y;
 		x = i / 3 * 3;
@@ -93,7 +94,7 @@ int check_box(std::vector<std::vector<int> >& v, int n, int i, int  j) {
 	return 1;
 }
 
-
+// u skup stavi sve moguće vrijednosti
 void possible_value(std::vector<std::vector<int> >& v, int i, int  j, std::set<int> &vrijednosti) {
 	for(int k = 1; k < 10; k++){
 		
@@ -109,19 +110,15 @@ void possible_value(std::vector<std::vector<int> >& v, int i, int  j, std::set<i
 int main() {
 	//srand(time(NULL));
 
-	std::vector<std::string> rijeci;
-	std::map<std::string, int> kratnost;
 
 
 	std::fstream file_stream;
 	std::string filename = "C:\\Users\\Borna\\Desktop\\Sudoku.txt";
 	file_stream.open(filename);
-	std::string rijec = "Rijec";
-
 	
 
 	
-
+// ostaci iz proslosti mozda neki jos trebaju :S
 	int i, j;
 	int brojac = 0;
 	int brojac2 = 0;
@@ -134,12 +131,10 @@ int main() {
 
 
 
-	
+	//uzmi jednu liniju iz filea
 		std::string sLine;
 		getline(file_stream, sLine);
 	
-
-	int count1 = 0, count2 = 0;
 
 	std::vector<int> field;
 	
@@ -153,16 +148,18 @@ int main() {
 	for (i = 0;i < 9; i++) {
 		v[i].resize(9);
 	}
-	  // allocate one array
+	  
 	polje_u_sudoku(field, v);
 
 	vprint_Sudoku(v);
 	
+	
+	//test
 	if (check_box(v, 2, 0, 2)) {
 		std::cout << "U kutiji moze 2 na toj poziciji" << std::endl;
 	}
 	
-
+//test mogućih vrijednosti .. prebacit iz skupa u bitove
 	std::set<int> skup;
 
 	possible_value(v, 2, 0, skup);
